@@ -5,6 +5,6 @@ export default interface IDisplayHeroDetail {
 
     hero: Hero | null 
 
-    askHeroDetail(id: number): Observable<any>
-    askHeroNameChange(newHeroName: string): Observable<any>
+    askHeroDetail(id: number): Observable<void>
+    askHeroNameChange(newHeroName: string): Observable<void>
 }

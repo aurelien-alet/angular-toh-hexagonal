@@ -5,9 +5,9 @@ export default interface IDisplayHeroes {
 
     heroes: Hero[]
     
-    askHeroesList(): Observable<any>
-    askHeroesFiltered(filter: string): Observable<any>
-    askHeroCreation(heroName: string): Observable<any>
-    askHeroDeletion(hero: Hero): Observable<any>
+    askHeroesList(): Observable<void>
+    askHeroesFiltered(filter: string): Observable<void>
+    askHeroCreation(heroName: string): Observable<void>
+    askHeroDeletion(hero: Hero): Observable<void>
 
 }
