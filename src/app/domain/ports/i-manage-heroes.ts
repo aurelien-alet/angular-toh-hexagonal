@@ -7,7 +7,7 @@ export default interface IManageHeroes {
     searchHeroes(term: string): Observable<Hero[]>
     getHero(id: Number): Observable<Hero> 
     addHero(hero: Hero): Observable<Hero>
-    updateHero(hero: Hero): Observable<Hero>
+    updateHero(hero: Hero): Observable<any>
     deleteHero(id: number): Observable<Hero>
 
 }
