@@ -5,6 +5,6 @@
     <label for="hero-name">Hero name: </label>
     <input #heroName id="hero-name" [(ngModel)]="heroDetailDisplayer.hero.name" placeholder="Hero name"/>
   </div>
-  <button type="button" (click)="goBack()">go back</button>
-  <button type="button" (click)="changeName(heroName.value)">save</button>
+  <button id="go-back-button" type="button" (click)="goBack()">go back</button>
+  <button id="change-name-button" type="button" (click)="changeName(heroName.value)">save</button>
 </div>

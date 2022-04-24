@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import IDisplayHeroDetail from 'src/app/domain/ports/i-display-hero-detail';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-hero-detail',
@@ -26,9 +27,11 @@ export class HeroDetailComponent implements OnInit {
   }
 
   changeName(newName: string): void {
-    this.heroDetailDisplayer.askHeroNameChange(newName).subscribe(_ => this.goBack())
+    this.heroDetailDisplayer.askHeroNameChange(newName).pipe(
+      finalize(() => this.goBack())
+    ).subscribe();
   }
-
+  
   goBack(): void {
     this.location.back();
   }
