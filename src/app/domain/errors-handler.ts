@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { HeroOperationError } from "./errors/hero-operation-error";
 import IManageMessages from "./ports/i-manage-messages";
 
 @Injectable({ providedIn: 'root' })
@@ -17,10 +18,9 @@ export default class ErrorsHandler {
      * @param result - optional value to return as the observable result
      */
     public handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-
+        return (error: HeroOperationError): Observable<T> => {
             console.error(error);
-            this._messagesManager.add(`${operation} failed: ${error.message}`);
+            this._messagesManager.add(`${operation} failed. ${error}`);
 
             // Let the app keep running by returning an empty result.
             return of(result as T);

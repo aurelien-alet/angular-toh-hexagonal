@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 import { Hero } from '../domain/models/hero';
+import { HeroOperationError } from '../domain/errors/hero-operation-error';
 import IManageHeroes from '../domain/ports/i-manage-heroes';
 
 
@@ -20,36 +21,58 @@ export class HeroAdapterService implements IManageHeroes {
 
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl);
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
+      catchError(this.handleHttpError())
+    );
   }
 
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url);
+    return this.http.get<Hero>(url).pipe(
+      catchError(this.handleHttpError())
+    );
   }
 
   /* GET heroes whose name contains search term */
   searchHeroes(term: string): Observable<Hero[]> {
-    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`);
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+      catchError(this.handleHttpError())
+    );
   }
 
   //////// Save methods //////////
 
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions);
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+      catchError(this.handleHttpError())
+    );
   }
 
   /** DELETE: delete the hero from the server */
   deleteHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete<Hero>(url, this.httpOptions);
+    return this.http.delete<Hero>(url, this.httpOptions).pipe(
+      catchError(this.handleHttpError())
+    );
   }
 
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, this.httpOptions);
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      catchError(this.handleHttpError())
+    );
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Throw an HeroOperation
+   */
+   private handleHttpError() {
+    return (error: any): Observable<any> => {
+      throw new HeroOperationError(error.body.error);
+    };
   }
 
 }
