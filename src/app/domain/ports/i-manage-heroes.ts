@@ -8,6 +8,6 @@ export default interface IManageHeroes {
     getHero(id: Number): Observable<Hero> 
     addHero(hero: Hero): Observable<Hero>
     updateHero(hero: Hero): Observable<Hero>
-    deleteHero(id: number): Observable<Hero>
+    deleteHero(id: Number): Observable<Number>
 
 }

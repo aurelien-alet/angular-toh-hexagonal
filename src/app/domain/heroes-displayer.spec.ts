@@ -205,7 +205,7 @@ describe('HeroesDisplayer', () => {
         heroToDelete,
     ];
     heroesDisplayer.heroes = currentHeroes;
-    iManageHeroesSpy.deleteHero.and.returnValue(of(heroToDelete));
+    iManageHeroesSpy.deleteHero.and.returnValue(of(2));
     let expectedHeroes = [
         { id: 1, name: 'A' },
     ];

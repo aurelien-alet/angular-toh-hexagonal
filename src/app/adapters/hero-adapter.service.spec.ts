@@ -200,7 +200,7 @@ describe('HeroAdapterService', () => {
   it('should delete expected hero', (done: DoneFn) => {
     const heroId: number = 1;
 
-    httpClientSpy.delete.and.returnValue(of(null));
+    httpClientSpy.delete.and.returnValue(of(heroId));
 
     service.deleteHero(heroId).subscribe({
         next: _ => {

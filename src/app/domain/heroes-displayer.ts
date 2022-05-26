@@ -54,7 +54,7 @@ export default class HeroesDisplayer implements IDisplayHeroes {
         return this._heroesManager.deleteHero(hero.id).pipe(
             tap(_ => this._messagesManager.add(`deleted hero id=${hero.id}`)),
             catchError(this._errorHandler.handleError<Hero>('deleteHero', {id: -1} as Hero)),
-            map(deletedHero => {this.heroes = this.heroes.filter(h => h.id !== deletedHero.id)})
+            map(deletedHeroId => {this.heroes = this.heroes.filter(h => h.id !== deletedHeroId)})
         );
     }
 

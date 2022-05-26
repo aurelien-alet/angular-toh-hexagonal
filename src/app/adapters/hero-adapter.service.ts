@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { catchError, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 import { Hero } from '../domain/models/hero';
 import { HeroOperationError } from '../domain/errors/hero-operation-error';
@@ -51,17 +51,21 @@ export class HeroAdapterService implements IManageHeroes {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero(id: number): Observable<Hero> {
+  deleteHero(id: Number): Observable<Number> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      catchError(this.handleHttpError())
+      catchError(this.handleHttpError()),
+      // returns the deleted hero id
+      map(_ => id)
     );
   }
 
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<Hero> {
     return this.http.put<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
-      catchError(this.handleHttpError())
+      catchError(this.handleHttpError()),
+      // returns the modified hero
+      map(_ => hero)
     );
   }
 
