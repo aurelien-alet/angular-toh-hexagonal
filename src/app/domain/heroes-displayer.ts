@@ -29,7 +29,8 @@ export default class HeroesDisplayer implements IDisplayHeroes {
         if (!filter.trim()) {
             // if not filter string, return empty hero array.
             this.heroes = [];
-            return of();
+            // avoid unexpected behaviours encountered using of()
+            return of(null).pipe(map(_ => {}));
         }
         return this._heroesManager.searchHeroes(filter).pipe(
             tap((heroes: Hero[]) => heroes.length ?
@@ -52,8 +53,8 @@ export default class HeroesDisplayer implements IDisplayHeroes {
     askHeroDeletion(hero: Hero): Observable<void> {
         return this._heroesManager.deleteHero(hero.id).pipe(
             tap(_ => this._messagesManager.add(`deleted hero id=${hero.id}`)),
-            catchError(this._errorHandler.handleError<Hero>('deleteHero')),
-            map(_ => {this.heroes = this.heroes.filter(h => h !== hero)})
+            catchError(this._errorHandler.handleError<Hero>('deleteHero', {id: -1} as Hero)),
+            map(deletedHero => {this.heroes = this.heroes.filter(h => h.id !== deletedHero.id)})
         );
     }
 
