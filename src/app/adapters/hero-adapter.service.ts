@@ -51,7 +51,7 @@ export class HeroAdapterService implements IManageHeroes {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero(id: Number): Observable<Number> {
+  deleteHero(id: number): Observable<number> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
       catchError(this.handleHttpError()),
