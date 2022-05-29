@@ -53,6 +53,27 @@
               ],
               "outputHashing": "all"
             },
+            "production-admin": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.admin.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -60,6 +81,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "development-admin": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.admin.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -70,8 +105,14 @@
             "production": {
               "browserTarget": "angular.io-example:build:production"
             },
+            "production-admin": {
+              "browserTarget": "angular.io-example:build:production-admin"
+            },
             "development": {
               "browserTarget": "angular.io-example:build:development"
+            },
+            "development-admin": {
+              "browserTarget": "angular.io-example:build:development-admin"
             }
           },
           "defaultConfiguration": "development"

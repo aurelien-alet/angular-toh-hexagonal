@@ -1,0 +1,30 @@
+div {
+  position: relative;
+  top: -0.3em;
+}
+
+button {
+  position: relative;
+  background-color: white;
+  color:  #525252;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 1px 10px 3px 10px;
+}
+
+button.back  {
+    left: 20px;
+  }
+  
+button.save {
+    left: 10px;
+}
+
+button:hover {
+  background-color: #525252;
+  color: white;
+}
+
+input {
+  width: 10em;
+}

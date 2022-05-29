@@ -6,7 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:admin": "ng serve -c development-admin",
     "build": "ng build",
+    "build:admin": "ng build -c production-admin",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e"

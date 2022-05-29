@@ -1,0 +1,40 @@
+<h2>Admin Panel</h2>
+
+<div class="search">
+  <label for="search-box">Heroes Filter</label>
+  <input #filterBox id="filter-box" (input)="filterTerms.next(filterBox.value)" />
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroesDisplayer.heroes">
+    <!-- <div class="hero-line"> -->
+      <span class="badge">{{hero.id}}</span>
+      
+      <div *ngIf="selectedHero !== hero">  
+        <span>{{hero.name}}</span>
+        <button type="button" class="delete" title="delete hero"
+          (click)="heroesDisplayer.askHeroDeletion(hero).subscribe()">x</button>
+        <button type="button" class="edit" title="edit hero"
+          (click)="selectedHero = hero">edit</button>
+      </div>
+
+      <div *ngIf="selectedHero === hero">
+        <app-hero-edit [heroId]="hero.id" 
+            (leaveEdit)="loadHeroes(); selectedHero=null;">
+        </app-hero-edit>
+      </div>
+
+  </li>
+
+  <li>
+    <span class="badge">New</span>
+    <div>
+      <input id="admin-new-hero" #adminHeroName placeholder="Hero name"/>
+      <button type="button" class="add" title="add hero"
+            (click)="heroesDisplayer.askHeroCreation(adminHeroName.value).subscribe(); adminHeroName.value='';">
+        add
+      </button>
+    </div>
+  </li>
+
+</ul>

@@ -5,9 +5,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '../adapters/in-memory-data.service';
 
 import { ComponentsModule } from './components.module';
-import { AppRoutingModule } from './app-routing.module';
 
-import { AppComponent } from './app.component';
+import { AdminAppComponent } from './admin-app.component';
 import { HeroAdapterService } from '../adapters/hero-adapter.service';
 import { MessageAdapterService } from '../adapters/message-adapter.service';
 import HeroDetailDisplayer from '../domain/hero-detail-displayer';
@@ -16,7 +15,6 @@ import MessagesDisplayer from '../domain/messages-displayer';
 
 @NgModule({
   imports: [
-    AppRoutingModule,
     ComponentsModule,
     HttpClientModule,
 
@@ -28,20 +26,19 @@ import MessagesDisplayer from '../domain/messages-displayer';
     )
   ],
   declarations: [
-    AppComponent,
+    AdminAppComponent,
   ],
   providers: [
     
     // Inject domain classes into components
     {provide: 'IDisplayHeroDetail', useClass: HeroDetailDisplayer},
     {provide: 'IDisplayHeroes', useClass: HeroesDisplayer},
-    {provide: 'IDisplayHeroesSearch', useClass: HeroesDisplayer},
     {provide: 'IDisplayMessages', useClass: MessagesDisplayer},
     
     // Inject asapters int domain classes
     {provide: 'IManageHeroes', useClass: HeroAdapterService},
     {provide: 'IManageMessages', useClass: MessageAdapterService}
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AdminAppComponent ]
 })
-export class AppModule { }
+export class AdminAppModule { }
