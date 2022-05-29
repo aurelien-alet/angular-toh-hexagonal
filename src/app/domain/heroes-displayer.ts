@@ -29,13 +29,14 @@ export default class HeroesDisplayer implements IDisplayHeroes {
         );
     }
 
-    askHeroesFiltered(filter: string): Observable<void> {
-        if (!filter.trim()) {
+    askHeroesFiltered(filter: string, allowEmpty: boolean = false): Observable<void> {
+        if (!allowEmpty && !filter.trim()) {
             // if not filter string, return empty hero array.
             this.heroes = [];
             // avoid unexpected behaviours encountered using of()
             return of(null).pipe(map(_ => {}));
         }
+        // in case allowEmpty is true, empty filter return all heroes
         return this._heroesManager.searchHeroes(filter).pipe(
             tap((heroes: Hero[]) => heroes.length ?
                 this._messagesManager.add(`found heroes matching "${filter}"`) :

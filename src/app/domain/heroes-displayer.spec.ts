@@ -127,7 +127,7 @@ describe('HeroesDisplayer', () => {
     expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('no heroes matching "C"');
   });
 
-  it('should get empty list on search when filter is empty', (done: DoneFn) => {
+  it('should get empty list on search when filter is empty, and empty is not allowed', (done: DoneFn) => {
     let currentHeroes = [
         { id: 1, name: 'A' },
         { id: 2, name: 'B' },
@@ -147,6 +147,29 @@ describe('HeroesDisplayer', () => {
     expect(heroesDisplayer.filter).toEqual('');
     expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
     expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledTimes(0);
+  });
+
+  it('should get all heroes on search when filter is empty, and empty is allowed', (done: DoneFn) => {
+    let currentHeroes = [
+        { id: 1, name: 'A' },
+        { id: 2, name: 'B' },
+        { id: 3, name: 'AB' },
+    ];
+    heroesDisplayer.heroes = currentHeroes;
+    let expectedHeroes = currentHeroes;
+    iManageHeroesSpy.searchHeroes.and.returnValue(of(expectedHeroes));
+
+    heroesDisplayer.askHeroesFiltered('', true).subscribe({
+        next: _ => {
+            done();
+        },
+        error: done.fail
+    });
+
+    expect(heroesDisplayer.filter).toEqual('');
+    expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
+    expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledOnceWith('');
+    expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('found heroes matching ""');
   });
 
   it('should display an error searching heroes', (done: DoneFn) => {
