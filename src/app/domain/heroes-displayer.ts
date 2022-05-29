@@ -41,7 +41,7 @@ export default class HeroesDisplayer implements IDisplayHeroes {
                 this._messagesManager.add(`found heroes matching "${filter}"`) :
                 this._messagesManager.add(`no heroes matching "${filter}"`)),
             catchError(this._errorHandler.handleError<Hero[]>('searchHeroes', [])),
-            map(heroes => {this.heroes = heroes; this.filter = filter})
+            map(heroes => {this.heroes = heroes; this.filter = filter;})
         );
     }
 

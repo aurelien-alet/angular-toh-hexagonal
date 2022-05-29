@@ -36,6 +36,9 @@ export class HeroSearchComponent implements OnInit {
       // ask hero list filtered each time the term changes
       tap((term: string) => this.heroesDisplayer.askHeroesFiltered(term).subscribe())
     
-      ).subscribe();
+    ).subscribe();
+
+    // reinitialise filter
+    this.searchTerms.next('');
   }
 }
