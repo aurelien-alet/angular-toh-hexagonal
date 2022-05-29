@@ -10,6 +10,7 @@ import IManageMessages from "./ports/i-manage-messages";
 export default class HeroesDisplayer implements IDisplayHeroes {
     
     heroes: Hero[] = [];
+    filter: string = '';
     
     constructor(
         private _errorHandler: ErrorsHandler,
@@ -18,6 +19,9 @@ export default class HeroesDisplayer implements IDisplayHeroes {
     ) {}
 
     askHeroesList(): Observable<void> {
+        if( this.filter ){
+            return this.askHeroesFiltered(this.filter);
+        }
         return this._heroesManager.getHeroes().pipe(
             tap(_ => this._messagesManager.add("fetched heroes")),
             catchError(this._errorHandler.handleError<Hero[]>('getHeroes', [])),
@@ -37,7 +41,7 @@ export default class HeroesDisplayer implements IDisplayHeroes {
                 this._messagesManager.add(`found heroes matching "${filter}"`) :
                 this._messagesManager.add(`no heroes matching "${filter}"`)),
             catchError(this._errorHandler.handleError<Hero[]>('searchHeroes', [])),
-            map(heroes => {this.heroes = heroes})
+            map(heroes => {this.heroes = heroes; this.filter = filter})
         );
     }
 
@@ -46,7 +50,9 @@ export default class HeroesDisplayer implements IDisplayHeroes {
         return this._heroesManager.addHero({name: heroName} as Hero).pipe(
             tap((newHero: Hero) => this._messagesManager.add(`added hero w/ id=${newHero.id}`)),
             catchError(this._errorHandler.handleError<Hero>('addHero')),
-            map(hero => {this.heroes.push(hero)}),
+            map(hero => {
+                if(heroName.indexOf(this.filter) !== -1){this.heroes.push(hero);}
+            })
         );
     }
     

@@ -38,6 +38,25 @@ describe('HeroesDisplayer', () => {
     expect(iManageHeroesSpy.getHeroes).toHaveBeenCalledOnceWith();
     expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('fetched heroes');
   });
+  
+  it('should get heroes list filtered if filter is set', (done: DoneFn) => {
+    heroesDisplayer.filter = 'B';
+    let expectedHeroes = [
+        { id: 2, name: 'B' },
+    ];
+    iManageHeroesSpy.searchHeroes.and.returnValue(of(expectedHeroes));
+
+    heroesDisplayer.askHeroesList().subscribe({
+        next: _ => {
+            done();
+        },
+        error: done.fail
+    });
+
+    expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
+    expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledOnceWith('B');
+    expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('found heroes matching "B"');
+  });
 
   it('should display an error getting heroes list', (done: DoneFn) => {
     const heroOperationErrorResponse = new HeroOperationError(
@@ -59,7 +78,7 @@ describe('HeroesDisplayer', () => {
     );
   });
 
-  it('should get heroes list filter by their name', (done: DoneFn) => {
+  it('should get heroes list filtered by their name', (done: DoneFn) => {
     let currentHeroes = [
         { id: 1, name: 'A' },
         { id: 2, name: 'B' },
@@ -79,6 +98,7 @@ describe('HeroesDisplayer', () => {
         error: done.fail
     });
 
+    expect(heroesDisplayer.filter).toEqual('A');
     expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
     expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledOnceWith('A');
     expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('found heroes matching "A"');
@@ -101,6 +121,7 @@ describe('HeroesDisplayer', () => {
         error: done.fail
     });
 
+    expect(heroesDisplayer.filter).toEqual('C');
     expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
     expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledOnceWith('C');
     expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith('no heroes matching "C"');
@@ -123,6 +144,7 @@ describe('HeroesDisplayer', () => {
         error: done.fail
     });
 
+    expect(heroesDisplayer.filter).toEqual('');
     expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
     expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledTimes(0);
   });
@@ -140,6 +162,7 @@ describe('HeroesDisplayer', () => {
       error: done.fail
     });
 
+    expect(heroesDisplayer.filter).toEqual('A');
     expect(heroesDisplayer.heroes).toEqual([]);
     expect(iManageHeroesSpy.searchHeroes).toHaveBeenCalledOnceWith('A');
     expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith(
@@ -160,6 +183,28 @@ describe('HeroesDisplayer', () => {
         { id: 2, name: 'B' },
         { id: 3, name: 'C' },
     ];
+
+    heroesDisplayer.askHeroCreation('C').subscribe({
+        next: _ => {
+            done();
+        },
+        error: done.fail
+    });
+
+    expect(heroesDisplayer.heroes).toEqual(expectedHeroes);
+    expect(iManageHeroesSpy.addHero).toHaveBeenCalledOnceWith({name: 'C'} as Hero);
+    expect(iManageMessagesSpy.add).toHaveBeenCalledOnceWith(`added hero w/ id=${newHero.id}`);
+  });
+
+  it('should add hero and filter it', (done: DoneFn) => {
+    let currentHeroes = [
+        { id: 2, name: 'B' },
+    ];
+    heroesDisplayer.heroes = currentHeroes;
+    heroesDisplayer.filter = 'B';
+    let newHero = { id: 3, name: 'C' };
+    iManageHeroesSpy.addHero.and.returnValue(of(newHero));
+    let expectedHeroes = currentHeroes;
 
     heroesDisplayer.askHeroCreation('C').subscribe({
         next: _ => {
