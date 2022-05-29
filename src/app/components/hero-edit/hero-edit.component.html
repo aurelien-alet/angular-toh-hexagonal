@@ -1,7 +1,7 @@
 <div *ngIf="heroDetailDisplayer.hero">
     <input #heroName id="edit-hero-name" [(ngModel)]="heroDetailDisplayer.hero.name" placeholder="Hero name"/>
-    <button type="button" class="save" title="save hero"
+    <button id="admin-save" type="button" class="save" title="save hero"
         (click)="save(heroName.value)">save</button>
-    <button type="button" class="back" title="back"
+    <button id="admin-back" type="button" class="back" title="back"
         (click)="leaveEdit.emit()">back</button>
 </div>

@@ -19,7 +19,7 @@
       </div>
 
       <div *ngIf="selectedHero === hero">
-        <app-hero-edit [heroId]="hero.id" 
+        <app-hero-edit class="edited-hero" [heroId]="hero.id" 
             (leaveEdit)="loadHeroes(); selectedHero=null;">
         </app-hero-edit>
       </div>
