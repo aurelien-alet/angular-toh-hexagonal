@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  heroAdapter: "hero"
+  heroAdapter: "superhero-api"
 };

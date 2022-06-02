@@ -1,31 +1,22 @@
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from '../adapters/in-memory-data.service';
 
 import { ComponentsModule } from './components.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { HeroAdapterService } from '../adapters/hero-adapter.service';
 import { MessageAdapterService } from '../adapters/message-adapter.service';
 import HeroDetailDisplayer from '../domain/hero-detail-displayer';
 import HeroesDisplayer from '../domain/heroes-displayer';
 import MessagesDisplayer from '../domain/messages-displayer';
+import { SuperheroApiAdapterService } from '../adapters/superhero-api-adapter';
 
 @NgModule({
   imports: [
     AppRoutingModule,
     ComponentsModule,
     HttpClientModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
   ],
   providers: [
     
@@ -36,9 +27,9 @@ import MessagesDisplayer from '../domain/messages-displayer';
     {provide: 'IDisplayMessages', useClass: MessagesDisplayer},
     
     // Inject asapters int domain classes
-    {provide: 'IManageHeroes', useClass: HeroAdapterService},
+    {provide: 'IManageHeroes', useClass: SuperheroApiAdapterService},
     {provide: 'IManageMessages', useClass: MessageAdapterService}
   ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class SuperheroApiAppModule { }

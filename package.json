@@ -6,7 +6,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:superhero-api": "ng serve -c development-superhero-api",
     "build": "ng build",
+    "build:superhero-api": "ng build -c production-superhero-api",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e"
