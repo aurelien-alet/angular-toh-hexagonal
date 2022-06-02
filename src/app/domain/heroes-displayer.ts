@@ -52,7 +52,8 @@ export default class HeroesDisplayer implements IDisplayHeroes {
             tap((newHero: Hero) => this._messagesManager.add(`added hero w/ id=${newHero.id}`)),
             catchError(this._errorHandler.handleError<Hero>('addHero')),
             map(hero => {
-                if(heroName.indexOf(this.filter) !== -1){this.heroes.push(hero);}
+                if( hero === undefined){return;}
+                if( heroName.indexOf(this.filter) !== -1){this.heroes.push(hero);}
             })
         );
     }
