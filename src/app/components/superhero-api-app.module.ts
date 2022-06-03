@@ -10,7 +10,7 @@ import { MessageAdapterService } from '../adapters/message-adapter.service';
 import HeroDetailDisplayer from '../domain/hero-detail-displayer';
 import HeroesDisplayer from '../domain/heroes-displayer';
 import MessagesDisplayer from '../domain/messages-displayer';
-import { SuperheroApiAdapterService } from '../adapters/superhero-api-adapter';
+import { SuperheroApiAdapterService } from '../adapters/superhero-api-adapter.service';
 
 @NgModule({
   imports: [

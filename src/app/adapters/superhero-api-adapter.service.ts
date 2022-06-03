@@ -23,7 +23,14 @@ export class SuperheroApiAdapterService implements IManageHeroes {
   getHeroes(): Observable<Hero[]> {
     const url = `${this.heroesUrl}/all.json`;
     return this.http.get<Hero[]>(url).pipe(
-      catchError(this.handleHttpError())
+      catchError(this.handleHttpError()),
+      map(apiResponse => {
+        let heroes: Hero[] = []
+        apiResponse.forEach((el: any) => {
+          heroes.push({'id': el.id, 'name': el.name});
+        });
+        return heroes;
+      })
     );
   }
 
@@ -31,7 +38,8 @@ export class SuperheroApiAdapterService implements IManageHeroes {
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/id/${id}.json`;
     return this.http.get<Hero>(url).pipe(
-      catchError(this.handleHttpError())
+      catchError(this.handleHttpError()),
+      map(apiResponse => { return {'id': apiResponse.id, 'name': apiResponse.name}})
     );
   }
 
