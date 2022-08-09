@@ -8,4 +8,4 @@ Run `npm install` to install node modules dependencies, before starting dev serv
 
 ## Development server
 
-Run `npm start` to start the dev server. Navigate to `http://localhost:4200/`.
+Run `npm start` to start the dev server with the original app, or `npm run start:superhero-api` to run the dev server calling the [superhero API](https://akabab.github.io/superhero-api/) by Yoann Cribier. Navigate to `http://localhost:4200/`.
