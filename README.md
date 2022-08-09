@@ -8,4 +8,4 @@ Run `npm install` to install node modules dependencies, before starting dev serv
 
 ## Development server
 
-Run `npm start` to start the dev server. Navigate to `http://localhost:4200/`.
+Run `npm start` to start the dev server with the original app, or npm run `start:admin-panel` to app with the admin panel interface. Navigate to `http://localhost:4200/`.
