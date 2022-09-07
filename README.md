@@ -1,6 +1,6 @@
 # Angular Hexagonal Architecture
 
-This projet is a simple Angular app using hexagonal architecture (or ports and adapters architecture) concepts. The rendering is the same as [Angular Tour of Heroes app](https://angular.io/tutorial), but code architecture is different. 
+This projet is a simple Angular app using hexagonal architecture (or ports and adapters architecture) concepts. The rendering is the same as [Angular Tour of Heroes app](https://angular.io/tutorial), but code architecture is different. All the explanations on the architecture choices can be found in [this article](https://dev.to/aurelien_alet/hexagonal-architecture-with-angular-8ll).
 
 ## Install dependencies
 
